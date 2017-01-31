@@ -42,8 +42,12 @@ def main():
     theta_A, theta_B = 0.5, 0.6 # head probability of coin A and B
     heads_A, heads_B = np.array([0.0]*len(data)), np.array([0.0]*len(data))
     tails_A, tails_B = np.array([0.0]*len(data)), np.array([0.0]*len(data))
+    record_theta_A, record_theta_B = [theta_A], [theta_B] # keep record of parameter estimates
+
     # Expectation-Maximization algorithm
+    iter_count = 0
     while (True):
+        iter_count += 1
         prev_theta_A, prev_theta_B = theta_A, theta_B
         # E-step: use parameter to compute probability distribution
         index = 0
@@ -58,6 +62,8 @@ def main():
         # M-step: estimate parameters
         theta_A = sum(heads_A) / (sum(heads_A) + sum(tails_A))
         theta_B = sum(heads_B) / (sum(heads_B) + sum(heads_B))
+        record_theta_A.append(theta_A)
+        record_theta_B.append(theta_B)
         # check convergence
         delta_A = (theta_A - prev_theta_A) / prev_theta_A
         delta_B = (theta_B - prev_theta_B) / prev_theta_B
@@ -65,8 +71,17 @@ def main():
             break
         else:
             continue
+
+    # print results
     print "\t thetaA \t thetaB"
     print "\t {:.3f} \t {:.3f}".format(theta_A, theta_B)
+
+    # plot the EM process
+    fig = plt.figure(figsize=(12,12))
+    fig.clf()
+    plt.plot(range(iter_count+1), record_theta_A, 'r--')
+    plt.plot(range(iter_count + 1), record_theta_B, 'b--')
+    plt.show()
 
 
 if __name__=="__main__":
