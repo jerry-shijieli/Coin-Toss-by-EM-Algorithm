@@ -79,8 +79,11 @@ def main():
     # plot the EM process
     fig = plt.figure(figsize=(12,12))
     fig.clf()
-    plt.plot(range(iter_count+1), record_theta_A, 'r--')
-    plt.plot(range(iter_count + 1), record_theta_B, 'b--')
+    ax = fig.gca()
+    ax.plot(range(iter_count+1), record_theta_A, 'r--')
+    ax.plot(range(iter_count + 1), record_theta_B, 'b--')
+    #ax.set_yscale('log')
+    #ax.set_ylim([0, 1.0])
     plt.show()
 
 
