@@ -61,7 +61,7 @@ def main():
             index += 1
         # M-step: estimate parameters
         theta_A = sum(heads_A) / (sum(heads_A) + sum(tails_A))
-        theta_B = sum(heads_B) / (sum(heads_B) + sum(heads_B))
+        theta_B = sum(heads_B) / (sum(heads_B) + sum(tails_B))
         record_theta_A.append(theta_A)
         record_theta_B.append(theta_B)
         # check convergence
